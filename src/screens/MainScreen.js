@@ -8,7 +8,6 @@ import {
 } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import { AntDesign } from '@expo/vector-icons';
-import { increment } from '../redux/slices/counterSlice';
 import ItemList from '../components/ItemList';
 
 function MainScreen({ navigation }) {
