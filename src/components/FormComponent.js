@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Text, TextInput, StyleSheet } from 'react-native';
+import { View, Button, Text, TextInput, StyleSheet } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 
 function FormComponent(props) {
@@ -8,18 +8,23 @@ function FormComponent(props) {
 	const [priority, setPriority] = useState(props.priority);
 
 	return (
-		<>
-			<Text>Titulo:</Text>
-			<TextInput value={title} onChangeText={(text) => setTitle(text)} />
-			<Text>Descrição:</Text>
+		<View style={styles.formContainer}>
+			<Text style={styles.inputLabel}>Titulo:</Text>
 			<TextInput
+				style={styles.input}
+				value={title}
+				onChangeText={(text) => setTitle(text)}
+			/>
+			<Text style={styles.inputLabel}>Descrição:</Text>
+			<TextInput
+				style={styles.input}
 				value={content}
 				onChangeText={(text) => setContent(text)}
 			/>
-			<Text>Prioridade:</Text>
+			<Text style={styles.inputLabel}>Prioridade:</Text>
 			<Picker
 				selectedValue={priority}
-				style={{ height: 50 }}
+				style={styles.picker}
 				onValueChange={(itemValue) => setPriority(itemValue)}
 			>
 				<Picker.Item label="Alta prioridade" value={0} />
@@ -30,7 +35,7 @@ function FormComponent(props) {
 				title="salvar"
 				onPress={() => props.onSubmit(title, content, priority)}
 			/>
-		</>
+		</View>
 	);
 }
 
@@ -40,6 +45,27 @@ FormComponent.defaultProps = {
 	priority: 0,
 };
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+	formContainer: {
+		flex: 1,
+		margin: 20,
+	},
+	inputLabel: {
+		fontSize: 18,
+	},
+	input: {
+		borderWidth: 1,
+		borderColor: '#dfe1e5',
+		borderRadius: 5,
+		padding: 10,
+		height: 40,
+		margin: 10,
+		backgroundColor: '#e3e3e3',
+	},
+	picker: {
+		height: 50,
+		marginBottom: 10,
+	},
+});
 
 export default FormComponent;

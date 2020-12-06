@@ -15,15 +15,39 @@ export default function App() {
 	return (
 		<Provider store={store}>
 			<NavigationContainer>
-				<Stack.Navigator>
-					<Stack.Screen name="Main" component={MainScreen} />
-					<Stack.Screen name="Details" component={DetailsScreen} />
-					<Stack.Screen name="Create" component={CreateScreen} />
-					<Stack.Screen name="Edit" component={EditScreen} />
+				<Stack.Navigator
+					screenOptions={{
+						headerLayoutPreset: { textAlign: 'center' },
+					}}
+				>
+					<Stack.Screen
+						name="Main"
+						component={MainScreen}
+						options={{
+							headerLayoutPreset: 'center',
+						}}
+					/>
+					<Stack.Screen
+						name="Details"
+						component={DetailsScreen}
+						screenOptions={{ headerLayoutPreset: 'center' }}
+					/>
+					<Stack.Screen
+						name="Create"
+						component={CreateScreen}
+						screenOptions={headerStyle}
+					/>
+					<Stack.Screen
+						name="Edit"
+						component={EditScreen}
+						screenOptions={headerStyle}
+					/>
 				</Stack.Navigator>
 			</NavigationContainer>
 		</Provider>
 	);
 }
+
+const headerStyle = { headerTitleAlign: 'center' };
 
 registerRootComponent(App);

@@ -4,10 +4,10 @@ const todoListSlice = createSlice({
 	name: 'todoList',
 	initialState: [
 		{
-			id: '1',
-			priority: 0,
+			id: '0',
+			userId: '0',
 			title: 'item 1',
-			content: 'Loren ipsu',
+			completed: false,
 		},
 	],
 	reducers: {
@@ -15,6 +15,11 @@ const todoListSlice = createSlice({
 			return [...state, actions.payload];
 		},
 		editItem: (state, actions) => {
+			return state.map((item) => {
+				return item.id === actions.payload.id ? actions.payload : item;
+			});
+		},
+		completeItem: (state, actions) => {
 			return state.map((item) => {
 				return item.id === actions.payload.id ? actions.payload : item;
 			});
