@@ -5,7 +5,6 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import store from './redux/store';
 import MainScreen from './screens/MainScreen';
-import DetailsScreen from './screens/DetailsScreen';
 import CreateScreen from './screens/CreateScreen';
 import EditScreen from './screens/EditScreen';
 
@@ -26,11 +25,6 @@ export default function App() {
 						options={{
 							headerLayoutPreset: 'center',
 						}}
-					/>
-					<Stack.Screen
-						name="Details"
-						component={DetailsScreen}
-						screenOptions={{ headerLayoutPreset: 'center' }}
 					/>
 					<Stack.Screen
 						name="Create"

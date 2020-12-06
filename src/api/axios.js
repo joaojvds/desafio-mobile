@@ -1,5 +1,5 @@
 import axios from 'axios';
 
 export default axios.create({
-	baseURL: 'https://my-json-server.typicode.com/joaojvds/desafio-mobile/data',
+	baseURL: 'https://jsonplaceholder.typicode.com/todos',
 });

@@ -23,7 +23,7 @@ function DetailsScreen({ route, navigation }) {
 	return (
 		<>
 			<Text>{item.title}</Text>
-			<Text>{item.content}</Text>
+			<Text>{item.completed ? 'Completo' : 'Aberto'}</Text>
 		</>
 	);
 }

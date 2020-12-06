@@ -1,29 +1,29 @@
 import React, { useEffect, useLayoutEffect } from 'react';
-import {
-	View,
-	ScrollView,
-	TouchableOpacity,
-	Text,
-	StyleSheet,
-} from 'react-native';
+import { ScrollView, TouchableOpacity, StyleSheet } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import axios from '../api/axios';
+import getRealm from '../api/realm';
 import { AntDesign } from '@expo/vector-icons';
 import ItemList from '../components/ItemList';
+import { fetchItem } from '../redux/slices/todoListSlice.js';
 
 function MainScreen({ navigation }) {
 	const dispatch = useDispatch();
 	const todoList = useSelector((state) => state.todoList);
 
-	const filterPriority = (priority) => {
-		return todoList.filter((item) => item.priority === priority);
+	/**Função para filtrar as tarefas completas das abertas */
+	const filterCompleted = (completed) => {
+		return todoList.filter((item) => item.completed === completed);
 	};
 
 	useEffect(() => {
 		fetchData();
+
+		fetchDB(dispatch);
 	}, []);
 
 	useLayoutEffect(() => {
+		//Função para alterar o header da tela
 		navigation.setOptions({
 			headerRight: () => (
 				//Botão para criar novos itens
@@ -40,18 +40,29 @@ function MainScreen({ navigation }) {
 	return (
 		<>
 			<ScrollView>
-				<ItemList name="Abertas" data={filterPriority(0)} />
-				<ItemList name="Completadas" data={filterPriority(1)} />
+				<ItemList name="Abertas" data={filterCompleted(false)} />
+				<ItemList name="Completadas" data={filterCompleted(true)} />
 			</ScrollView>
 		</>
 	);
 }
 
+/** Faz o fetch dos dados salvos na localstorage */
+async function fetchDB(dispatch) {
+	try {
+		const realm = await getRealm();
+		const data = realm.objects('todo').sorted('id');
+		// os dados pegos pelo realm são salvos na store e exibido na tela
+		dispatch(fetchItem(data));
+		return realm.close;
+	} catch (err) {
+		console.log('linha 33 ' + err);
+	}
+}
+
 async function fetchData() {
 	try {
-		const { data } = await axios.get(
-			'https://jsonplaceholder.typicode.com/todos/1'
-		);
+		const { data } = await axios.get();
 	} catch (err) {
 		console.log(err);
 	}

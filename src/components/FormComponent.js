@@ -4,8 +4,7 @@ import { Picker } from '@react-native-picker/picker';
 
 function FormComponent(props) {
 	const [title, setTitle] = useState(props.title);
-	const [content, setContent] = useState(props.content);
-	const [priority, setPriority] = useState(props.priority);
+	const [completed, setCompleted] = useState(props.completed);
 
 	return (
 		<View style={styles.formContainer}>
@@ -15,25 +14,18 @@ function FormComponent(props) {
 				value={title}
 				onChangeText={(text) => setTitle(text)}
 			/>
-			<Text style={styles.inputLabel}>Descrição:</Text>
-			<TextInput
-				style={styles.input}
-				value={content}
-				onChangeText={(text) => setContent(text)}
-			/>
-			<Text style={styles.inputLabel}>Prioridade:</Text>
+			<Text style={styles.inputLabel}>Estado:</Text>
 			<Picker
-				selectedValue={priority}
+				selectedValue={completed}
 				style={styles.picker}
-				onValueChange={(itemValue) => setPriority(itemValue)}
+				onValueChange={(itemValue) => setCompleted(itemValue)}
 			>
-				<Picker.Item label="Alta prioridade" value={0} />
-				<Picker.Item label="Media prioridade" value={1} />
-				<Picker.Item label="Baixa prioridade" value={2} />
+				<Picker.Item label="Aberto" value={false} />
+				<Picker.Item label="Completo" value={true} />
 			</Picker>
 			<Button
 				title="salvar"
-				onPress={() => props.onSubmit(title, content, priority)}
+				onPress={() => props.onSubmit(title, completed)}
 			/>
 		</View>
 	);
@@ -41,8 +33,7 @@ function FormComponent(props) {
 
 FormComponent.defaultProps = {
 	title: '',
-	content: '',
-	priority: 0,
+	completed: false,
 };
 
 const styles = StyleSheet.create({

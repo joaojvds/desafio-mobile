@@ -7,15 +7,14 @@ import {
 	StyleSheet,
 } from 'react-native';
 import { useDispatch } from 'react-redux';
-import { deleteItem } from '../redux/slices/todoListSlice';
-import { AntDesign } from '@expo/vector-icons';
+import { editItem } from '../redux/slices/todoListSlice';
 import { useNavigation } from '@react-navigation/native';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 function ItemList({ name, data }) {
 	const navigation = useNavigation();
 	const dispatch = useDispatch();
-	console.log(name);
-	console.log(data);
+
 	return (
 		<View style={styles.listContainer}>
 			<Text style={styles.listTitle}>{name}</Text>
@@ -23,7 +22,7 @@ function ItemList({ name, data }) {
 				horizontal
 				showsHorizontalScrollIndicator={false}
 				data={data}
-				keyExtractor={(item) => item.id}
+				keyExtractor={(item) => item.id.toString()}
 				renderItem={({ item }) =>
 					renderItem(item, dispatch, navigation)
 				}
@@ -32,21 +31,38 @@ function ItemList({ name, data }) {
 	);
 }
 
+/** Itens que serão renderizados na lista */
 function renderItem(item, dispatch, navigation) {
 	return (
 		<View style={styles.itemContainer}>
 			<TouchableOpacity
 				style={styles.detailsButton}
-				onPress={() => navigation.navigate('Details', { id: item.id })}
+				onPress={() => navigation.navigate('Edit', { id: item.id })}
 			>
 				<Text style={styles.itemTitle}>{item.title}</Text>
-				<Text style={styles.itemContent}>{item.content}</Text>
 			</TouchableOpacity>
 			<TouchableOpacity
 				style={styles.deleteButton}
-				onPress={() => dispatch(deleteItem({ id: item.id }))}
+				onPress={() =>
+					dispatch(
+						editItem({
+							id: item.id,
+							userId: item.userId,
+							title: item.title,
+							completed: !item.completed,
+						})
+					)
+				}
 			>
-				<AntDesign name="delete" size={24} color="white" />
+				<MaterialCommunityIcons
+					name={
+						item.completed
+							? 'checkbox-marked-outline'
+							: 'checkbox-blank-outline'
+					}
+					size={24}
+					color="white"
+				/>
 			</TouchableOpacity>
 		</View>
 	);
@@ -87,7 +103,7 @@ const styles = StyleSheet.create({
 	deleteButton: {
 		alignItems: 'center',
 		justifyContent: 'center',
-		backgroundColor: 'black',
+		backgroundColor: '#24a0ed',
 		flex: 3,
 	},
 });

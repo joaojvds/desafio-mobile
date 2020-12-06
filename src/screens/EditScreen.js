@@ -1,27 +1,63 @@
-import React from 'react';
-import { View, Button, Text, StyleSheet } from 'react-native';
-import { useDispatch } from 'react-redux';
-import { editItem } from '../redux/slices/todoListSlice';
+import React, { useLayoutEffect } from 'react';
+import { TouchableOpacity, StyleSheet } from 'react-native';
+import { useSelector, useDispatch } from 'react-redux';
+import { AntDesign } from '@expo/vector-icons';
+import { editItem, deleteItem } from '../redux/slices/todoListSlice';
 import FormComponent from '../components/FormComponent';
 
 function EditScreen({ route, navigation }) {
-	console.log(route.params);
 	const dispatch = useDispatch();
+	const todoList = useSelector((state) => state.todoList);
+
+	let todo = todoList.find((todo) => todo.id === route.params.id);
+
+	if (!todo) {
+		todo = {
+			id: '',
+			userId: 1,
+			title: '',
+			completed: false,
+		};
+	}
+
+	useLayoutEffect(() => {
+		navigation.setOptions({
+			headerRight: () => (
+				<TouchableOpacity
+					style={styles.headerButton}
+					onPress={() => {
+						dispatch(deleteItem({ id: todo.id }));
+						navigation.pop();
+					}}
+				>
+					<AntDesign name="delete" size={24} color="black" />
+				</TouchableOpacity>
+			),
+		});
+	}, [navigation]);
+
 	return (
 		<FormComponent
-			title={route.params.title}
-			content={route.params.content}
-			priority={route.params.priority}
-			onSubmit={(title, content, priority) => {
+			title={todo.title}
+			completed={todo.completed}
+			onSubmit={(title, completed) => {
 				dispatch(
-					editItem({ id: route.params.id, title, content, priority })
+					editItem({
+						id: todo.id,
+						userId: 1,
+						title,
+						completed,
+					})
 				);
-				navigation.pop();
 			}}
 		/>
 	);
 }
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+	headerButton: {
+		padding: 20,
+	},
+});
 
 export default EditScreen;

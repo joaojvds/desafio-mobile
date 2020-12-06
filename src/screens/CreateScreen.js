@@ -6,11 +6,17 @@ import FormComponent from '../components/FormComponent';
 
 function CreateScreen({ navigation }) {
 	const dispatch = useDispatch();
+
 	return (
 		<FormComponent
-			onSubmit={(title, content, priority) => {
+			onSubmit={(title, completed) => {
 				dispatch(
-					addItem({ id: `${+new Date()}`, title, content, priority })
+					addItem({
+						id: +new Date(),
+						userId: 1,
+						title,
+						completed,
+					})
 				);
 				navigation.navigate('Main');
 			}}
