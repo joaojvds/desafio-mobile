@@ -1,3 +1,4 @@
+// Schema com os tipos de dados que ele pode receber
 const todoSchema = {
 	name: 'todo',
 	primaryKey: 'id',

@@ -44,6 +44,7 @@ function renderItem(item, dispatch, navigation) {
 			<TouchableOpacity
 				style={styles.deleteButton}
 				onPress={() =>
+					// Altera se o item esta completo ou não
 					dispatch(
 						editItem({
 							id: item.id,

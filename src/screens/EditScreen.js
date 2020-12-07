@@ -9,8 +9,13 @@ function EditScreen({ route, navigation }) {
 	const dispatch = useDispatch();
 	const todoList = useSelector((state) => state.todoList);
 
+	// Faz uma uma busca pelo no array de state pelo id
 	let todo = todoList.find((todo) => todo.id === route.params.id);
 
+	/**
+	 * Caso não encontre nenhum item no state,
+	 * ele seta todo com um objeto com um objeto com os campos vazio
+	 */
 	if (!todo) {
 		todo = {
 			id: '',
@@ -20,6 +25,7 @@ function EditScreen({ route, navigation }) {
 		};
 	}
 
+	// Botão de deletar, localizado no header
 	useLayoutEffect(() => {
 		navigation.setOptions({
 			headerRight: () => (
@@ -27,6 +33,7 @@ function EditScreen({ route, navigation }) {
 					style={styles.headerButton}
 					onPress={() => {
 						dispatch(deleteItem({ id: todo.id }));
+						// retorna para a tela anterior
 						navigation.pop();
 					}}
 				>
@@ -49,6 +56,7 @@ function EditScreen({ route, navigation }) {
 						completed,
 					})
 				);
+				navigation.pop();
 			}}
 		/>
 	);

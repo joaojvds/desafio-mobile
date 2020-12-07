@@ -31,6 +31,7 @@ function FormComponent(props) {
 	);
 }
 
+// Seta os props para esses em caso de não hover props passados
 FormComponent.defaultProps = {
 	title: '',
 	completed: false,
