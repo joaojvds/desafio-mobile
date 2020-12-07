@@ -1,23 +1,28 @@
 import React from 'react';
-import { View, Button, Text, StyleSheet } from 'react-native';
 import { useDispatch } from 'react-redux';
 import { addItem } from '../redux/slices/todoListSlice';
 import FormComponent from '../components/FormComponent';
 
 function CreateScreen({ navigation }) {
 	const dispatch = useDispatch();
+
 	return (
 		<FormComponent
-			onSubmit={(title, content, priority) => {
+			onSubmit={(title, completed) => {
+				// Adiciona no state o novo item
 				dispatch(
-					addItem({ id: `${+new Date()}`, title, content, priority })
+					addItem({
+						id: +new Date(),
+						userId: 1,
+						title,
+						completed,
+					})
 				);
-				navigation.navigate('Main');
+				// Ao terminar retorna para a pagina anterior
+				navigation.pop();
 			}}
 		/>
 	);
 }
-
-const styles = StyleSheet.create({});
 
 export default CreateScreen;

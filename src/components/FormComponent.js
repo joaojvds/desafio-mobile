@@ -1,45 +1,63 @@
 import React, { useState } from 'react';
-import { Button, Text, TextInput, StyleSheet } from 'react-native';
+import { View, Button, Text, TextInput, StyleSheet } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 
 function FormComponent(props) {
 	const [title, setTitle] = useState(props.title);
-	const [content, setContent] = useState(props.content);
-	const [priority, setPriority] = useState(props.priority);
+	const [completed, setCompleted] = useState(props.completed);
 
 	return (
-		<>
-			<Text>Titulo:</Text>
-			<TextInput value={title} onChangeText={(text) => setTitle(text)} />
-			<Text>Descrição:</Text>
+		<View style={styles.formContainer}>
+			<Text style={styles.inputLabel}>Titulo:</Text>
 			<TextInput
-				value={content}
-				onChangeText={(text) => setContent(text)}
+				style={styles.input}
+				value={title}
+				onChangeText={(text) => setTitle(text)}
 			/>
-			<Text>Prioridade:</Text>
+			<Text style={styles.inputLabel}>Estado:</Text>
 			<Picker
-				selectedValue={priority}
-				style={{ height: 50 }}
-				onValueChange={(itemValue) => setPriority(itemValue)}
+				selectedValue={completed}
+				style={styles.picker}
+				onValueChange={(itemValue) => setCompleted(itemValue)}
 			>
-				<Picker.Item label="Alta prioridade" value={0} />
-				<Picker.Item label="Media prioridade" value={1} />
-				<Picker.Item label="Baixa prioridade" value={2} />
+				<Picker.Item label="Aberto" value={false} />
+				<Picker.Item label="Completo" value={true} />
 			</Picker>
 			<Button
 				title="salvar"
-				onPress={() => props.onSubmit(title, content, priority)}
+				onPress={() => props.onSubmit(title, completed)}
 			/>
-		</>
+		</View>
 	);
 }
 
+// Seta os props para esses em caso de não hover props passados
 FormComponent.defaultProps = {
 	title: '',
-	content: '',
-	priority: 0,
+	completed: false,
 };
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+	formContainer: {
+		flex: 1,
+		margin: 20,
+	},
+	inputLabel: {
+		fontSize: 18,
+	},
+	input: {
+		borderWidth: 1,
+		borderColor: '#dfe1e5',
+		borderRadius: 5,
+		padding: 10,
+		height: 40,
+		margin: 10,
+		backgroundColor: '#e3e3e3',
+	},
+	picker: {
+		height: 50,
+		marginBottom: 10,
+	},
+});
 
 export default FormComponent;
