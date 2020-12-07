@@ -59,7 +59,7 @@ async function fetchDB(dispatch) {
 		await fetchAPI('todo', 'todos');
 
 		// Pega os dados do banco de dados
-		const data = realm.objects('todo').sorted('id');
+		const data = realm.objects('todo').sorted('id', { ascending: true });
 
 		// Os dados pegos pelo realm são salvos na store e exibido na tela
 		dispatch(fetchItem(data));

@@ -11,5 +11,6 @@ export default store = configureStore({
 	}),
 	middleware: getDefaultMiddleware({
 		serializableCheck: false,
+		immutableCheck: false,
 	}),
 });

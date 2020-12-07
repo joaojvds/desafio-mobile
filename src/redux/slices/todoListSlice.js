@@ -13,7 +13,7 @@ const todoListSlice = createSlice({
 		addItem: (state, actions) => {
 			// Salva o objeto no banco de dados
 			saveData('todo', actions.payload);
-			return [...state, actions.payload];
+			return [actions.payload, ...state];
 		},
 		/** Atualiza um item da store pelo id */
 		editItem: (state, actions) => {
