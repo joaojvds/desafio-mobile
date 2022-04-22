@@ -1,4 +1,4 @@
-# Desafio para a @Tech
+# Demostração de conhecimento em React Native
   Projeto de um todo app em React Native + Redux com um consumo de API e dados persistentes.
 ## Como executar:
   Você deve ter o java e o android studio instalado e configurado para executar no android.
